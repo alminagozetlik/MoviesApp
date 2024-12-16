@@ -18,7 +18,7 @@ namespace BLL.Services
 
         public IQueryable<UserModel> Query()
         {
-            return _db.Users.OrderByDescending(u => u.IsActive).Select(u => new UserModel() { Record = u });
+            return _db.Users.Include(u => u.Role).OrderByDescending(u => u.IsActive).Select(u => new UserModel() { Record = u });
         }
 
         public ServiceBase Update(User entity)
