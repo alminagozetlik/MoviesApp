@@ -18,6 +18,6 @@ namespace BLL.DAL
         public string RoleName { get; set; }
 
         [InverseProperty("Role")]
-        public virtual ICollection<User> Users { get; set; } = new List<User>();
+        public List<Role> Roles { get; set; } = new List<Role>();
     }
 }

@@ -14,11 +14,19 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// AppSettings
+var appSettingsSection = builder.Configuration.GetSection(nameof(AppSettings));
+appSettingsSection.Bind(new AppSettings());
+
 // IoC Container:
-var connectionString = "server=(localdb)\\mssqllocaldb;database=MoviesAppDB;trusted_connection=true;";
+//var connectionString = "server=(localdb)\\mssqllocaldb;database=MoviesAppDB;trusted_connection=true;";
+var connectionString = builder.Configuration.GetConnectionString("Db");
 builder.Services.AddDbContext<Db>(options => options.UseSqlServer(connectionString));
-builder.Services.AddScoped<IMovieService, MovieService>(); // AddSingleton, AddTransient
+builder.Services.AddScoped<IService<Movie, MovieModel>, MovieService>();// AddSingleton, AddTransient
 builder.Services.AddScoped<IService<Director, DirectorModel>, DirectorService>();
+builder.Services.AddScoped<IService<Genre, GenreModel>, GenreService>();
+builder.Services.AddScoped<IService<User, UserModel>, UserService>();
+
 
 var app = builder.Build();
 

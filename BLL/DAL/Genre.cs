@@ -14,7 +14,7 @@ namespace BLL.DAL
         [Required]
         [StringLength(60)]
         public string Name { get; set; }
-
-        public List<MovieGenre> MovieGenre { get; set; } = new List<MovieGenre>();
+        public List<MovieGenre> MovieGenres { get; set; } = new List<MovieGenre>();
+     
     }
 }

@@ -22,6 +22,7 @@ namespace BLL.DAL
         public decimal? TotalRevenue { get; set; }
         public int DirectorId { get; set; }
         public Director Director { get; set; }
-        public List<MovieGenre> MovieGenre { get; set; } = new List<MovieGenre>();
+        public List<MovieGenre> MovieGenres { get; set; } = new List<MovieGenre>();
+      
     }
 }
