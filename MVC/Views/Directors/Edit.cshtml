@@ -30,14 +30,14 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="Record.Id" />
         <div class="row mb-3">
-            <label asp-for="name" class="col-2 col-form-label fw-bold"></label>
+            <label asp-for="Name" class="col-2 col-form-label fw-bold"></label>
 	        <div class="col-10">
 	            <input asp-for="Record.Name" class="form-control" />
 		        <span asp-validation-for="Record.Name" class="text-danger"></span>
 	        </div>
         </div>
         <div class="row mb-3">
-            <label asp-for="surname" class="col-2 col-form-label fw-bold"></label>
+            <label asp-for="Surname" class="col-2 col-form-label fw-bold"></label>
 	        <div class="col-10">
 	            <input asp-for="Record.Surname" class="form-control" />
 		        <span asp-validation-for="Record.Surname" class="text-danger"></span>

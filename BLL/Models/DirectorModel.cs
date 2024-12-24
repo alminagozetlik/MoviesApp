@@ -13,9 +13,9 @@ namespace BLL.Models
     {
         public Director Record {get; set;}
         [DisplayName("Director Name")]
-        public string name => Record.Name;
+        public string Name => Record.Name;
         [DisplayName("Director Surname")]
-        public string surname => Record.Surname;
+        public string Surname => Record.Surname;
         public string NameSurname => Record.Name + " " + Record.Surname;
         [DisplayName("Is Retired")]
         public string IsRetired => Record.IsRetired ? "Yes" : "No";

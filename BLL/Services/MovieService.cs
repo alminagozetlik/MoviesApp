@@ -27,11 +27,8 @@ namespace BLL.Services
         {
             if (_db.Movie.Any(s => s.Name.ToUpper() == record.Name.ToUpper().Trim()))
                 return Error("Movies with the same name exists!");
-            var entity = _db.Movie.SingleOrDefault(s => s.Id == record.Id);
-            if (entity is null)
-                return Error("Movies can't be found!");
-            entity.Name = record.Name?.Trim();
-            _db.Movie.Add(entity);
+            record.Name = record.Name?.Trim();
+            _db.Movie.Add(record);
             _db.SaveChanges(); // commit to the database
             return Success("Movies created successfully.");
         }
@@ -41,9 +38,9 @@ namespace BLL.Services
             if (_db.Movie.Any(s => s.Id != record.Id && s.Name.ToUpper() == record.Name.ToUpper().Trim()))
                 return Error("Movies with the same name exists!");
        
-            var entity = _db.Movie.Include(m => m.MovieGenres).SingleOrDefault(s => s.Id == record.Id);
+            var entity = _db.Movie.Include(m => m.MovieGenres).SingleOrDefault(m => m.Id == record.Id);
             if (entity is null)
-                return Error("Movies can't be found!");
+                return Error("Movie can't be found!");
             _db.MovieGenres.RemoveRange(entity.MovieGenres);
             entity.Name = record.Name?.Trim();
             entity.ReleaseDate = record.ReleaseDate;

@@ -27,11 +27,8 @@ namespace BLL.Services
             if (_db.Directors.Any(p => p.Id != record.Id && p.Name.ToLower() == record.Name.ToLower().Trim() &&
                 p.IsRetired == record.IsRetired && p.Surname.ToLower() == record.Surname.ToLower().Trim()))
                 return Error("Director with the same name and surname and  retired situation exists");
-            var entity = _db.Directors.SingleOrDefault(s => s.Id == record.Id);
-            if (entity is null)
-                return Error("Movies can't be found!");
-            entity.Name = record.Name?.Trim();
-            _db.Directors.Add(entity);
+            record.Name = record.Name?.Trim();
+            _db.Directors.Add(record);
             _db.SaveChanges();
             return Success("Director created successfully.");
         }
@@ -44,7 +41,7 @@ namespace BLL.Services
                 return Error("Director with the same name and surname and retired situation exists!");
             var entity = _db.Directors.SingleOrDefault(s => s.Id == record.Id);
             if (entity is null)
-                return Error("Movies can't be found!");
+                return Error("Director can't be found!");
             entity.Name = record.Name?.Trim();
             _db.Directors.Update(entity);
             _db.SaveChanges();

@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MVC.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize]
     public class MoviesController : MvcController
     {
         // Service injections:
@@ -26,7 +26,7 @@ namespace MVC.Controllers
             , IService<Director, DirectorModel> directorService
 
         /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
-        , IService<Genre, GenreModel> genreService
+            , IService<Genre, GenreModel> genreService
         )
         {
             _movieService = movieService;
@@ -38,6 +38,7 @@ namespace MVC.Controllers
         }
 
         // GET: Movies
+        [AllowAnonymous]
         public IActionResult Index()
         {
             // Get collection service logic:
@@ -56,13 +57,15 @@ namespace MVC.Controllers
         protected void SetViewData()
         {
             // Related items service logic to set ViewData (Record.Id and Name parameters may need to be changed in the SelectList constructor according to the model):
-            ViewData["DirectorId"] = new SelectList(_directorService.Query().ToList(), "Record.Id", "Name");
+            ViewData["DirectorId"] = new SelectList(_directorService.Query().ToList(), "Record.Id", "NameSurname");
             
             /* Can be uncommented and used for many to many relationships. ManyToManyRecord may be replaced with the related entiy name in the controller and views. */
             ViewBag.GenreIds = new MultiSelectList(_genreService.Query().ToList(), "Record.Id", "Name");
         }
 
         // GET: Movies/Create
+
+        [Authorize(Roles = "admin")]
         public IActionResult Create()
         {
             SetViewData();
@@ -72,6 +75,7 @@ namespace MVC.Controllers
         // POST: Movies/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public IActionResult Create(MovieModel movie)
         {
             if (ModelState.IsValid)
@@ -90,6 +94,7 @@ namespace MVC.Controllers
         }
 
         // GET: Movies/Edit/5
+        [Authorize(Roles = "admin")]
         public IActionResult Edit(int id)
         {
             // Get item to edit service logic:
@@ -101,6 +106,7 @@ namespace MVC.Controllers
         // POST: Movies/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public IActionResult Edit(MovieModel movie)
         {
             if (ModelState.IsValid)
@@ -119,6 +125,7 @@ namespace MVC.Controllers
         }
 
         // GET: Movies/Delete/5
+        [Authorize(Roles = "admin")]
         public IActionResult Delete(int id)
         {
             // Get item to delete service logic:
@@ -129,6 +136,7 @@ namespace MVC.Controllers
         // POST: Movies/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public IActionResult DeleteConfirmed(int id)
         {
             // Delete item service logic:
